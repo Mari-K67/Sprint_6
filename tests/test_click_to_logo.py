@@ -1,39 +1,34 @@
 import pytest
-from pages.base_for_pages import BaseForPages 
-from locators.click_to_logo_locators import LogoLocators as ll
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
+import allure
+from pages.click_to_logo_page import ClickToLogoPage
+from pages.base_page import BasePage
+from locators.click_to_logo_locators import LogoLocators 
 import data
-
 #python -m pytest tests/test_click_to_logo.py
 
 class TestQuestions:
+    @allure.title('Переход на страницу Яндекс Дзен при клике на лого Яндекса')
     def test_click_to_yandex_logo(self, driver):
-        page = BaseForPages(driver)
+        page = ClickToLogoPage(driver)
         
-        #кликнуть на логотип Яндекс
-        page.click(ll.yandex_logo)
+        with allure.step('1. кликнуть на логотип Яндекс'):
+            page.click_with_wait(LogoLocators.yandex_logo)
 
-        #ожидание открытия вкладки 
-        WebDriverWait(driver, 10).until(ec.number_of_windows_to_be(2))
+        with allure.step('2. переключение на новую вкладку'):
+            page.go_to_new_window()
 
-        # Переключение на новую вкладку
-        driver.switch_to.window(driver.window_handles[1])
+        with allure.step('3. проверить, что произошел переход на главную страницу Дзена'):
+            assert data.url_dzen == driver.current_url
 
-        #ожидание загрузки
-        WebDriverWait(driver, 10).until(ec.url_to_be(data.url_dzen))
-
-        #проверить, что произошел переход на главную страницу Дзена(не переходит...)
-        assert data.url_dzen == driver.current_url
-
+    @allure.title('Переход на страницу главную страницу Самоката при клике на лого Самокат')
     def test_click_to_scooter_logo(self, driver):
-        page = BaseForPages(driver)
+        page = BasePage(driver)
 
-        #кликнуть на кнопку "Заказать", чтобы уйти с главной страницы
-        page.click(ll.oder_button)
+        with allure.step('1. кликнуть на кнопку "Заказать", чтобы уйти с главной страницы'):
+            page.click(LogoLocators.oder_button)
 
-        #кликнуть на логотип Самокат
-        page.click(ll.scooter_logo)
+        with allure.step('2. кликнуть на логотип Самокат'):
+            page.click(LogoLocators.scooter_logo)
 
-        #проверить, что произошел переход на главную страницу Самоката
-        assert driver.current_url == "https://qa-scooter.education-services.ru/"
+        with allure.step('3. проверить, что произошел переход на главную страницу Самоката'):
+            assert driver.current_url == data.url

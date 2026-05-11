@@ -1,7 +1,6 @@
 from selenium.webdriver.common.by import By
 
 class QuestionsLocators:
-    cookie_button = (By.ID, "rcc-confirm-button")
 
     #Вопросы
     question_1 = (By.ID, 'accordion__heading-0')
