@@ -2,13 +2,13 @@ import pytest
 import allure
 from pages.make_oder_page import MakeOderPage
 from locators.make_oder_locators import MakeOderLocators
-import data
-#python -m pytest tests/test_make_oder1.py
+from data import CustomerInformation
+#python -m pytest tests/test_make_oder.py
 
 class TestQuestions:
     @allure.title('Успешное оформление заказа через верхнюю кнопку')
     @pytest.mark.parametrize("name, surname, adress, metro_station, phone_number, date, rental_period, color", [
-       (data.name_1, data.surname_1, data.adress_1, data.metro_station_1, data.phone_number_1, data.date_1, data.rental_period_1, MakeOderLocators.black)
+       (CustomerInformation.name_1, CustomerInformation.surname_1, CustomerInformation.adress_1, CustomerInformation.metro_station_1, CustomerInformation.phone_number_1, CustomerInformation.date_1, CustomerInformation.rental_period_1, MakeOderLocators.black)
        ])
     def test_make_oder_top_order_button(self, driver, name, surname, adress, metro_station, phone_number, date, rental_period, color):
         page = MakeOderPage(driver)
@@ -36,7 +36,7 @@ class TestQuestions:
     
     @allure.title('Успешное оформление заказа через нижнюю кнопку')
     @pytest.mark.parametrize("name, surname, adress, metro_station, phone_number, date, rental_period, color", [
-       (data.name_2, data.surname_2, data.adress_2, data.metro_station_2, data.phone_number_2, data.date_2, data.rental_period_2, MakeOderLocators.grey)
+       (CustomerInformation.name_2, CustomerInformation.surname_2, CustomerInformation.adress_2, CustomerInformation.metro_station_2, CustomerInformation.phone_number_2, CustomerInformation.date_2, CustomerInformation.rental_period_2, MakeOderLocators.grey)
        ])
     def test_make_oder_bottom_order_button(self, driver, name, surname, adress, metro_station, phone_number, date, rental_period, color):
         page = MakeOderPage(driver)

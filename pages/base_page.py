@@ -27,3 +27,20 @@ class BasePage:
     #прокрутка страницы вниз
     def scroll_to_botton(self, driver):
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+    #прокрутка до элемента
+    def scroll_to_element(self, locator):
+        element = self.driver.find_element(*locator)
+        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+
+    #ожидание открытия второго окна
+    def waite_2_page(self):  
+        WebDriverWait(self.driver, 10).until(ec.number_of_windows_to_be(2))
+
+    #переключение на новую вкладку
+    def go_to_new_window(self):
+        self.driver.switch_to.window(self.driver.window_handles[1])
+
+    #получение текущей ссылки
+    def get_current_url(self):
+        return self.driver.current_url

@@ -1,11 +1,11 @@
 import pytest
 from selenium import webdriver
-import data
+from data import URL
 
 @pytest.fixture
 def driver():
     driver = webdriver.Firefox()
     driver.maximize_window()
-    driver.get(data.url)
+    driver.get(URL.url)
     yield driver
     driver.quit()

@@ -28,7 +28,3 @@ class MakeOderPage(BasePage):
         self.send_keys(MakeOderLocators.when_bring_field, date)
         #Выбрать цвет
         self.click(color) 
-     
-    def scroll_to_element(self, locator):
-        element = self.driver.find_element(*locator)
-        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
